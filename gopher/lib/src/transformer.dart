@@ -14,9 +14,7 @@ class GopherRequestTransformer
       var lineStream = sock.transform(utf8.decoder).transform(LineSplitter());
       var lines = StreamQueue(lineStream);
       var requestLine = await lines.next;
-      // TODO: Read other information from the request?
-      scheduleMicrotask(lines.rest.drain);
-      yield GopherRequest(requestLine);
+      yield GopherRequest(requestLine, sock, lines);
     }
   }
 }

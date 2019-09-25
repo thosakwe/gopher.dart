@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'request.dart';
+import 'transformer.dart';
 
-class GopherServer {
+class GopherServer extends Stream<GopherRequest> {
   ServerSocket _serverSocket;
   SecureServerSocket _secureServerSocket;
   Stream<Socket> _socketStream;
@@ -39,6 +41,17 @@ class GopherServer {
         requireClientCertificate: requireClientCertificate,
         supportedProtocols: supportedProtocols);
     return GopherServer.listenOnSecure(socket);
+  }
+
+  @override
+  StreamSubscription<GopherRequest> listen(
+      void Function(GopherRequest event) onData,
+      {Function onError,
+      void Function() onDone,
+      bool cancelOnError}) {
+    var stream = _socketStream.transform(GopherRequestTransformer());
+    return stream.listen(onData,
+        onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
 
   Future<void> close() async {
