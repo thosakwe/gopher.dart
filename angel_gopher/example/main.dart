@@ -6,7 +6,7 @@ main() async {
   var logger = Logger('example')..onRecord.listen(print);
   var app = Angel(logger: logger), gopher = AngelGopher(app);
 
-  app.get('/', (req, res) => res.write(''));
+  app.get('/', (req, res) => res.write('Hello, Gopher world!'));
 
   app.get('/json', (req, res) => {'this': 'is json!!!'});
 
