@@ -6,6 +6,11 @@ class GopherServer {
   SecureServerSocket _secureServerSocket;
   Stream<Socket> _socketStream;
 
+  InternetAddress get address =>
+      _secureServerSocket?.address ?? _serverSocket?.address;
+
+  int get port => _secureServerSocket?.port ?? _serverSocket?.port;
+
   GopherServer.listenOn(this._serverSocket) : _socketStream = _serverSocket;
 
   GopherServer.listenOnSecure(this._secureServerSocket)
