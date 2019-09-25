@@ -10,6 +10,7 @@ class GopherRequest {
   GopherRequest(this.path, this.socket, this.lines);
 
   Future<void> close() {
+    socket.writeln('.');
     socket.close();
     lines.rest.drain();
     return Future.value();
