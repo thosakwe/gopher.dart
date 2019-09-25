@@ -1,11 +1,16 @@
 name: angel_gopher
 version: 0.0.0
+description: Angel framework bindings for the Gopher [RFC1436] Web protocol.
+author: Tobe O <thosakwe@gmail.com>
+homepage: https://github.com/thosakwe/gopher.dart/tree/master/angel_gopher
 environment:
   sdk: ">=2.0.0 <3.0.0"
 dependencies:
+  angel_container: ^1.0.0
   angel_framework: ^2.0.0
   async: ^2.0.0
   gopher: ^0.0.0
+  mock_request: ^1.0.0
 dev_dependencies:
   logging: ^0.11.0
   pedantic: ^1.0.0
