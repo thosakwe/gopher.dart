@@ -13,12 +13,14 @@ class GopherRequestContext extends RequestContext<GopherRequest> {
   @override
   final Container container;
 
+  final String path;
+
   @override
   final HttpHeaders headers = MockHttpHeaders();
 
   Uri _uri;
 
-  GopherRequestContext(this.rawRequest, this.container);
+  GopherRequestContext(this.rawRequest, this.container, this.path);
 
   @override
   Stream<List<int>> get body => rawRequest.lines.rest.transform(utf8.encoder);
@@ -36,9 +38,6 @@ class GopherRequestContext extends RequestContext<GopherRequest> {
   String get originalMethod => method;
 
   @override
-  String get path => uri.path;
-
-  @override
   InternetAddress get remoteAddress => rawRequest.socket.remoteAddress;
 
   @override
@@ -48,5 +47,6 @@ class GopherRequestContext extends RequestContext<GopherRequest> {
   Uri get uri => _uri ??= Uri(
       scheme: 'gopher',
       host: rawRequest.socket.address.address,
-      port: rawRequest.socket.port);
+      port: rawRequest.socket.port,
+      path: rawRequest.path);
 }

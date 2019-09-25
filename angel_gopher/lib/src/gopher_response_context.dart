@@ -30,9 +30,31 @@ class GopherResponseContext extends ResponseContext<GopherRequest> {
   @override
   bool get isOpen => !_isClosed && !_isDetached;
 
+  void writeFileItem(String selector, path) {
+    if (!isOpen) {
+      throw ResponseContext.closed();
+    }
+    rawResponse.writeItem(GopherItemType.file, [
+      selector,
+      path,
+      rawResponse.socket.address.address,
+      rawResponse.socket.port
+    ]);
+  }
+
   @override
   void useBuffer() {
     _buffer ??= LockableBytesBuilder();
+  }
+
+  @override
+  Future close() async {
+    if (!_isDetached && !_isClosed && !isBuffered) {
+      await rawResponse.close();
+    }
+
+    _isClosed = true;
+    await super.close();
   }
 
   @override

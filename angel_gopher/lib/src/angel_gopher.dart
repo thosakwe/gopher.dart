@@ -5,6 +5,8 @@ import 'package:gopher/gopher.dart';
 import 'gopher_request_context.dart';
 import 'gopher_response_context.dart';
 
+final RegExp _straySlashes = RegExp(r'(^/+)|(/+$)');
+
 class AngelGopher extends Driver<GopherRequest, GopherRequest, GopherServer,
     GopherRequestContext, GopherResponseContext> {
   factory AngelGopher(Angel app, {bool useZone = true}) {
@@ -37,8 +39,12 @@ class AngelGopher extends Driver<GopherRequest, GopherRequest, GopherServer,
 
   @override
   Future<GopherRequestContext> createRequestContext(
-          GopherRequest request, GopherRequest response) =>
-      Future.value(GopherRequestContext(request, app.container.createChild()));
+      GopherRequest request, GopherRequest response) {
+    var path = request.path.replaceAll(_straySlashes, '');
+    if (path.isEmpty) path = '/';
+    return Future.value(
+        GopherRequestContext(request, app.container.createChild(), path));
+  }
 
   @override
   Future<GopherResponseContext> createResponseContext(
