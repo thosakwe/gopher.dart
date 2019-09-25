@@ -35,14 +35,14 @@ class GopherRequest {
   void writeCrlf() => socket.add([$cr, $lf]);
 
   void writeItem(type, [Iterable values]) {
-    var v = values?.join('F');
+    var v = values?.join('\t');
     socket.write(type);
     if (v != null) socket.write(v);
     writeCrlf();
   }
 
-  Future<void> close() {
-    socket.writeln('.');
+  Future<void> close({bool writeDot = false}) {
+    if (writeDot) socket.writeln('.');
     socket.close();
     lines.rest.drain();
     return Future.value();
