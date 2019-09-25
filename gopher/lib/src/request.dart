@@ -32,6 +32,8 @@ class GopherRequest {
     await socket.addStream(stream);
   }
 
+  void writeText(obj) => socket.write(obj);
+
   void writeCrlf() => socket.add([$cr, $lf]);
 
   void writeItem(type, [Iterable values]) {

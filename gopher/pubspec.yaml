@@ -1,9 +1,13 @@
 name: gopher
 version: 0.0.0
+description: An implementation of the Gopher (RFC1436) Web protocol in Dart.
+author: Tobe Osakwe <thosakwe@gmail.com>
+homepage: https://github.com/thosakwe/gopher.dart/tree/master/gopher
 environment:
   sdk: ">=2.0.0 <3.0.0"
 dependencies:
   async: ^2.0.0
+  charcode: ^1.0.0
 dev_dependencies:
   pedantic: ^1.0.0
   test: ^1.0.0
