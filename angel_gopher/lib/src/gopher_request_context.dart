@@ -15,12 +15,14 @@ class GopherRequestContext extends RequestContext<GopherRequest> {
 
   final String path;
 
+  final Angel app;
+
   @override
   final HttpHeaders headers = MockHttpHeaders();
 
   Uri _uri;
 
-  GopherRequestContext(this.rawRequest, this.container, this.path);
+  GopherRequestContext(this.rawRequest, this.container, this.path, this.app);
 
   @override
   Stream<List<int>> get body => rawRequest.lines.rest.transform(utf8.encoder);

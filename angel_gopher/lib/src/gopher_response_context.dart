@@ -13,7 +13,9 @@ class GopherResponseContext extends ResponseContext<GopherRequest> {
   LockableBytesBuilder _buffer;
   bool _isDetached = false, _isClosed = false;
 
-  GopherResponseContext(this.rawResponse, this.correspondingRequest);
+  GopherResponseContext(this.rawResponse, this.correspondingRequest) {
+    app = correspondingRequest.app;
+  }
 
   @override
   BytesBuilder get buffer => _buffer;

@@ -43,7 +43,7 @@ class AngelGopher extends Driver<GopherRequest, GopherRequest, GopherServer,
     var path = request.path.replaceAll(_straySlashes, '');
     if (path.isEmpty) path = '/';
     return Future.value(
-        GopherRequestContext(request, app.container.createChild(), path));
+        GopherRequestContext(request, app.container.createChild(), path, app));
   }
 
   @override
